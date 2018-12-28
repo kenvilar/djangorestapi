@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from updates.views import json_example_view1, json_example_view2
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^json/example1/$', json_example_view1),
+    url(r'^json/example2/$', json_example_view2),
 ]
