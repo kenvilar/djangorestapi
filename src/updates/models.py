@@ -57,13 +57,13 @@ class Update(models.Model):
     #     return data
 
     def serialize(self):
-        image = self.image
-        print(image)
-        if image is not None:
+        try:
             image = self.image.url
+        except:
+            image = ""
         data = {
-            "content": self.content,
             "user": self.user.id,
+            "content": self.content,
             "image": image,
         }
         data = json.dumps(data)
