@@ -14,13 +14,18 @@ class UpdateQuerySet(models.QuerySet):
     #     qs = self
     #     return serialize("json", qs, fields=('user', 'content', 'image'))
 
+    # def serialize(self):
+    #     qs = self
+    #     final_array = []
+    #     for obj in qs:
+    #         struct = json.loads(obj.serialize())
+    #         final_array.append(struct)
+    #     return json.dumps(final_array)
+
     def serialize(self):
-        qs = self
-        final_array = []
-        for obj in qs:
-            struct = json.loads(obj.serialize())
-            final_array.append(struct)
-        return json.dumps(final_array)
+        list_values = list(self.values("user", "content", "image"))
+        print(list_values)
+        return json.dumps(list_values)
 
 
 class UpdateManager(models.Manager):
@@ -43,10 +48,23 @@ class Update(models.Model):
     def __unicode__(self):
         return self.content or ""
 
+    # def serialize(self):
+    #     json_data = serialize("json", [self], fields=('user', 'content', 'image'))
+    #     struct = json.loads(json_data)
+    #     print(struct)
+    #     data = json.dumps(struct[0]['fields'])
+    #     print(data)
+    #     return data
+
     def serialize(self):
-        json_data = serialize("json", [self], fields=('user', 'content', 'image'))
-        struct = json.loads(json_data)
-        print(struct)
-        data = json.dumps(struct[0]['fields'])
-        print(data)
+        image = self.image
+        print(image)
+        if image is not None:
+            image = self.image.url
+        data = {
+            "content": self.content,
+            "user": self.user.id,
+            "image": image,
+        }
+        data = json.dumps(data)
         return data
