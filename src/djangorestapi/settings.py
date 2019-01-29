@@ -26,6 +26,7 @@ SECRET_KEY = 'hx$t#v*x7x^x03s$24^q02dhhwut+$*c#se68*)z^a+p=6mhn*'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# APPEND_TRAILING_SLASH = True
 
 
 # Application definition
