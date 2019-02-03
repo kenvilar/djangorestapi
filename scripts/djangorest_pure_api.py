@@ -32,7 +32,7 @@ def create_update():
     print(requests.codes.ok)
     print(r.headers)
     if r.status_code == requests.codes.ok:
-        print(r.json())
+        # print(r.json())
         return r.json()
     return r.text
 

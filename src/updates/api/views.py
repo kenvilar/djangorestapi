@@ -30,4 +30,4 @@ class UpdateModelListAPIView(CSRFExemptMixin, View):
 
     def post(self, request, *args, **kwargs):
         data = json.dumps({"message": "Unknown data"})
-        return HttpResponse({}, content_type='application/json')
+        return HttpResponse(data, content_type='application/json')
