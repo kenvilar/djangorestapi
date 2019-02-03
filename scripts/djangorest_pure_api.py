@@ -27,8 +27,8 @@ def create_update():
         'user': 1,
         'content': 'Another new cool update',
     }
-    # r = requests.post(BASE_URL + ENDPOINT, data=_new_data)
-    r = requests.delete(BASE_URL + ENDPOINT, data=_new_data)
+    r = requests.post(BASE_URL + ENDPOINT, data=_new_data)
+    # r = requests.delete(BASE_URL + ENDPOINT, data=_new_data)
     print(r.status_code)
     print(requests.codes.ok)
     print(r.headers)
@@ -36,7 +36,6 @@ def create_update():
         # print(r.json())
         return r.json()
     return r.text
-
 
 
 # print(get_list())
