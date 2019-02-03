@@ -31,3 +31,7 @@ class UpdateModelListAPIView(CSRFExemptMixin, View):
     def post(self, request, *args, **kwargs):
         data = json.dumps({"message": "Unknown data"})
         return HttpResponse(data, content_type='application/json')
+
+    def delete(self, request, *args, **kwargs):
+        data = json.dumps({"message": "You can't delete entire list."})
+        return HttpResponse(data, content_type='application/json')
