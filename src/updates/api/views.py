@@ -9,32 +9,6 @@ from updates.models import Update as UpdateModel
 from .utils import is_json
 
 
-class UpdateModelListAPIView(HttpResponseMixin, CSRFExemptMixin, View):
-    is_json = True
-
-    def get(self, request, *args, **kwargs):
-        qs = UpdateModel.objects.all()
-        json_data = qs.serialize()
-        return self.render_to_response(json_data)
-
-    def post(self, request, *args, **kwargs):
-        # print(request.POST)
-        form = UpdateModelForm(request.POST)
-        if form.is_valid():
-            obj = form.save(commit=True)
-            obj_data = obj.serialize()
-            return self.render_to_response(obj_data, status=201)
-        if form.errors:
-            data = json.dumps(form.errors)
-            return self.render_to_response(data, status=400)
-        data = {"message": "Not Allowed"}
-        return self.render_to_response(data, status=400)
-
-    def delete(self, request, *args, **kwargs):
-        data = json.dumps({"message": "You can't delete entire list."})
-        return self.render_to_response(data, status=403)
-
-
 class UpdateModelDetailAPIView(HttpResponseMixin, CSRFExemptMixin, View):
     is_json = True
 
@@ -86,3 +60,34 @@ class UpdateModelDetailAPIView(HttpResponseMixin, CSRFExemptMixin, View):
             return self.render_to_response(error_data, status=404)
         json_data = json.dumps({"message": "Something"})
         return self.render_to_response(json_data, status=403)
+
+
+class UpdateModelListAPIView(HttpResponseMixin, CSRFExemptMixin, View):
+    is_json = True
+
+    def get(self, request, *args, **kwargs):
+        qs = UpdateModel.objects.all()
+        json_data = qs.serialize()
+        return self.render_to_response(json_data)
+
+    def post(self, request, *args, **kwargs):
+        # print(request.POST)
+        valid_json = is_json(request.body)
+        if not valid_json:
+            error_data = json.dumps({"message": "Please send using JSON."})
+            return self.render_to_response(error_data, status=400)
+        data = json.loads(request.body)
+        form = UpdateModelForm(data)
+        if form.is_valid():
+            obj = form.save(commit=True)
+            obj_data = obj.serialize()
+            return self.render_to_response(obj_data, status=201)
+        if form.errors:
+            data = json.dumps(form.errors)
+            return self.render_to_response(data, status=400)
+        data = {"message": "Not Allowed"}
+        return self.render_to_response(data, status=400)
+
+    def delete(self, request, *args, **kwargs):
+        data = json.dumps({"message": "You can't delete entire list."})
+        return self.render_to_response(data, status=403)

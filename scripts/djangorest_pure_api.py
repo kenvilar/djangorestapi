@@ -29,7 +29,7 @@ def create_update():
         'user': 1,
         'content': 'Another cool content',
     }
-    r = requests.post(BASE_URL + ENDPOINT + "1/", data=_new_data)
+    r = requests.post(BASE_URL + ENDPOINT, data=_new_data)
     # r = requests.delete(BASE_URL + ENDPOINT, data=_new_data)
     print(r.status_code)
     print(requests.codes.ok)
@@ -63,7 +63,7 @@ def do_obj_delete():
     return r.text
 
 
-print(do_obj_update())
+# print(do_obj_update())
 # print(get_list())
 # get_list()
-# print(create_update())
+print(create_update())
