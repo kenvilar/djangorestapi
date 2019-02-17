@@ -42,7 +42,7 @@ def create_update():
 
 def do_obj_update():
     _new_data = {
-        'content': 'New obj data',
+        'content': 'Some new awesome content',
     }
     r = requests.put(BASE_URL + ENDPOINT + "1/", data=json.dumps(_new_data))
     print(r.status_code)
@@ -56,7 +56,7 @@ def do_obj_delete():
     _new_data = {
         'content': 'Delete obj data',
     }
-    r = requests.delete(BASE_URL + ENDPOINT + "1/")
+    r = requests.delete(BASE_URL + ENDPOINT + "3/")
     print(r.status_code)
     if r.status_code == requests.codes.ok:
         return r.json()
@@ -66,4 +66,5 @@ def do_obj_delete():
 # print(do_obj_update())
 # print(get_list())
 # get_list()
-print(create_update())
+# print(create_update())
+print(do_obj_delete())
