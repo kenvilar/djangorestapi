@@ -29,7 +29,7 @@ def create_update():
         'user': 1,
         'content': 'Another cool content',
     }
-    r = requests.post(BASE_URL + ENDPOINT, data=_new_data)
+    r = requests.post(BASE_URL + ENDPOINT, data=json.dumps(_new_data))
     # r = requests.delete(BASE_URL + ENDPOINT, data=_new_data)
     print(r.status_code)
     print(requests.codes.ok)
