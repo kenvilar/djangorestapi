@@ -6,6 +6,7 @@ from djangorestapi.mixins import HttpResponseMixin
 from .mixins import CSRFExemptMixin
 from updates.forms import UpdateModelForm
 from updates.models import Update as UpdateModel
+from .utils import is_json
 
 
 class UpdateModelListAPIView(HttpResponseMixin, CSRFExemptMixin, View):
@@ -68,6 +69,11 @@ class UpdateModelDetailAPIView(HttpResponseMixin, CSRFExemptMixin, View):
 
         # print(dir(request))
         print(request.body)
+        valid_json = is_json(request.body)
+        if not valid_json:
+            error_data = json.dumps({"message": "Please send using JSON."})
+            return self.render_to_response(error_data, status=400)
+
         new_data = json.loads(request.body)
         print(new_data['content'])
         json_data = json.dumps({"message": "Something"})
