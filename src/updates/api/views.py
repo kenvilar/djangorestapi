@@ -109,9 +109,10 @@ class UpdateModelListAPIView(HttpResponseMixin, CSRFExemptMixin, View):
                 return self.render_to_response(error_data, status=404)
             json_data = obj.serialize()
             return self.render_to_response(json_data)
-        qs = self.get_queryset()
-        json_data = qs.serialize()
-        return self.render_to_response(json_data)
+        else:
+            qs = self.get_queryset()
+            json_data = qs.serialize()
+            return self.render_to_response(json_data)
 
     def post(self, request, *args, **kwargs):
         # print(request.POST)
